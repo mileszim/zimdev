@@ -64,10 +64,18 @@ function meterVerdict(delta: number): string {
   return "EXPOSURE GOOD";
 }
 
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+function Panel({
+  title,
+  className,
+  children,
+}: {
+  title?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section className="panel">
-      <h2 className="panel-title">{title}</h2>
+    <section className={className ? `panel ${className}` : "panel"}>
+      {title && <h2 className="panel-title">{title}</h2>}
       {children}
     </section>
   );
@@ -133,8 +141,8 @@ export default function Home() {
 
       <div className="deck">
         <div className="rail rail-left">
-          <Panel title="OPERATOR">
-            <p className="op-name">MILES ZIMMERMAN</p>
+          <Panel className="panel-operator">
+            <h2 className="op-name">MILES ZIMMERMAN</h2>
             <p className="op-trade">SOFTWARE ENGINEER &amp; PHOTOGRAPHER</p>
             <p className="op-station">SAN FRANCISCO, CALIFORNIA</p>
             <nav className="op-links" aria-label="Profiles and contact">

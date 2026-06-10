@@ -8,6 +8,16 @@
   "compatibility_date": "2026-06-10",
   "main": "./workers/app.ts",
   "vars": {},
+  "routes": [
+    {
+      "pattern": "zim.dev",
+      "custom_domain": true,
+    },
+    {
+      "pattern": "www.zim.dev",
+      "custom_domain": true,
+    },
+  ],
   "observability": {
     "enabled": true,
   },

@@ -649,6 +649,11 @@ pre.thumb {
     grid-area: right;
   }
 
+  /* on small screens the camera controls come first; the card follows */
+  .panel-operator {
+    order: 1;
+  }
+
   .masthead {
     flex-wrap: wrap;
     gap: 0.2rem 1rem;
