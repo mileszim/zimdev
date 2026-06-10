@@ -158,6 +158,10 @@ body::after {
 
 /* ---- operator's card ------------------------------------------ */
 
+.op-mobile {
+  display: none;
+}
+
 .op-name {
   font-family: var(--font-display);
   font-size: 1.6rem;
@@ -633,7 +637,8 @@ pre.thumb {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "stage stage"
-      "left right";
+      "left right"
+      "card card";
   }
 
   .stage {
@@ -649,9 +654,14 @@ pre.thumb {
     grid-area: right;
   }
 
-  /* on small screens the camera controls come first; the card follows */
-  .panel-operator {
-    order: 1;
+  /* the operator card moves to the bottom of the deck on small screens */
+  .op-desktop {
+    display: none;
+  }
+
+  .op-mobile {
+    display: block;
+    grid-area: card;
   }
 
   .masthead {
@@ -666,7 +676,8 @@ pre.thumb {
     grid-template-areas:
       "stage"
       "left"
-      "right";
+      "right"
+      "card";
   }
 
   .stage {

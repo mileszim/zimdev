@@ -43,8 +43,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 const LINKS = [
-  { label: "POST", value: "DEALOPS", href: "https://dealops.com", external: true },
-  { label: "DARKROOM", value: "ZIM.PICS", href: "https://zim.pics", external: true },
+  { label: "COMPANY", value: "DEALOPS", href: "https://dealops.com", external: true },
+  { label: "PORTFOLIO", value: "ZIM.PICS", href: "https://zim.pics", external: true },
   { label: "GITHUB", value: "@MILESZIM", href: "https://github.com/mileszim", external: true, me: true },
   { label: "LINKEDIN", value: "/IN/MILESZIM", href: "https://linkedin.com/in/mileszim", external: true, me: true },
   { label: "RESUME", value: "PDF", href: "/resume.pdf", external: false },
@@ -78,6 +78,31 @@ function Panel({
       {title && <h2 className="panel-title">{title}</h2>}
       {children}
     </section>
+  );
+}
+
+function OperatorCard({ className }: { className: string }) {
+  return (
+    <Panel className={className}>
+      <h2 className="op-name">MILES ZIMMERMAN</h2>
+      <p className="op-trade">SOFTWARE ENGINEER &amp; PHOTOGRAPHER</p>
+      <p className="op-station">SAN FRANCISCO, CALIFORNIA</p>
+      <nav className="op-links" aria-label="Profiles and contact">
+        {LINKS.map((l) => (
+          <a
+            key={l.label}
+            href={l.href}
+            {...(l.external
+              ? { target: "_blank", rel: l.me ? "me noopener noreferrer" : "noopener noreferrer" }
+              : {})}
+          >
+            <span>{l.label}</span>
+            <strong>{l.value}</strong>
+            <em aria-hidden="true">-&gt;</em>
+          </a>
+        ))}
+      </nav>
+    </Panel>
   );
 }
 
@@ -141,27 +166,6 @@ export default function Home() {
 
       <div className="deck">
         <div className="rail rail-left">
-          <Panel className="panel-operator">
-            <h2 className="op-name">MILES ZIMMERMAN</h2>
-            <p className="op-trade">SOFTWARE ENGINEER &amp; PHOTOGRAPHER</p>
-            <p className="op-station">SAN FRANCISCO, CALIFORNIA</p>
-            <nav className="op-links" aria-label="Profiles and contact">
-              {LINKS.map((l) => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  {...(l.external
-                    ? { target: "_blank", rel: l.me ? "me noopener noreferrer" : "noopener noreferrer" }
-                    : {})}
-                >
-                  <span>{l.label}</span>
-                  <strong>{l.value}</strong>
-                  <em aria-hidden="true">-&gt;</em>
-                </a>
-              ))}
-            </nav>
-          </Panel>
-
           <Panel title="FILM TRANSPORT">
             <div className="counter" aria-live="polite">
               <span className="counter-num">{String(snap.frame).padStart(2, "0")}</span>
@@ -184,6 +188,8 @@ export default function Home() {
             </div>
             <p className="fine">ROLL Nº{snap.roll} · ZIMCHROME 400</p>
           </Panel>
+
+          <OperatorCard className="op-desktop" />
         </div>
 
         <div className="stage">
@@ -261,6 +267,8 @@ export default function Home() {
             ].join("\n")}</pre>
           </Panel>
         </div>
+
+        <OperatorCard className="op-mobile" />
       </div>
 
       <footer className="sheet-wrap">
