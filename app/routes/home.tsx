@@ -12,15 +12,43 @@ import {
 } from "../lib/zim35/engine";
 
 export function meta({}: Route.MetaArgs) {
+  const description =
+    "Miles Zimmerman — software engineer & photographer in San Francisco. " +
+    "Operate the ZIM-35, a mechanical 35mm SLR rendered live in ASCII: wind the lever, set the exposure, fire the shutter.";
   return [
-    { title: "ZIM-35 — Mechanical ASCII Camera" },
+    { title: "Miles Zimmerman · zim.dev" },
+    { name: "description", content: description },
+    { property: "og:title", content: "Miles Zimmerman · zim.dev" },
+    { property: "og:description", content: description },
+    { property: "og:url", content: "https://zim.dev" },
+    { property: "og:type", content: "website" },
+    { tagName: "link", rel: "canonical", href: "https://zim.dev/" },
     {
-      name: "description",
-      content:
-        "Operate a fully mechanical 35mm SLR rendered live in ASCII. Wind the lever, set the exposure, fire the shutter.",
+      "script:ld+json": {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Miles Zimmerman",
+        url: "https://zim.dev",
+        jobTitle: "Software Engineer",
+        worksFor: { "@type": "Organization", name: "Dealops", url: "https://dealops.com" },
+        address: { "@type": "PostalAddress", addressLocality: "San Francisco", addressRegion: "CA" },
+        sameAs: [
+          "https://github.com/mileszim",
+          "https://linkedin.com/in/mileszim",
+          "https://zim.pics",
+        ],
+      },
     },
   ];
 }
+
+const LINKS = [
+  { label: "POST", value: "DEALOPS", href: "https://dealops.com", external: true },
+  { label: "DARKROOM", value: "ZIM.PICS", href: "https://zim.pics", external: true },
+  { label: "GITHUB", value: "@MILESZIM", href: "https://github.com/mileszim", external: true, me: true },
+  { label: "LINKEDIN", value: "/IN/MILESZIM", href: "https://linkedin.com/in/mileszim", external: true, me: true },
+  { label: "RESUME", value: "PDF", href: "/resume.pdf", external: false },
+];
 
 function buildMeter(delta: number): string {
   const scale = "-3...-2...-1....0....+1...+2...+3";
@@ -93,15 +121,39 @@ export default function Home() {
   return (
     <main className="rig">
       <header className="masthead">
-        <span className="brand">ZIMWERK OPTIK</span>
-        <span className="model">
-          ZIM-35 <em>// MECHANICAL ASCII SLR</em>
+        <span className="ident">
+          <span className="brand">ZIM.DEV</span>
+          <span className="ident-sub">MILES ZIMMERMAN</span>
         </span>
-        <span className="serial">SN 0001976 · EST. 1976</span>
+        <span className="model">
+          ZIM-35 <em>// MECHANICAL ASCII SLR BY ZIMWERK OPTIK</em>
+        </span>
+        <span className="serial">SOFTWARE ENGINEER &amp; PHOTOGRAPHER · SAN FRANCISCO, CA</span>
       </header>
 
       <div className="deck">
         <div className="rail rail-left">
+          <Panel title="OPERATOR">
+            <p className="op-name">MILES ZIMMERMAN</p>
+            <p className="op-trade">SOFTWARE ENGINEER &amp; PHOTOGRAPHER</p>
+            <p className="op-station">SAN FRANCISCO, CALIFORNIA</p>
+            <nav className="op-links" aria-label="Profiles and contact">
+              {LINKS.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  {...(l.external
+                    ? { target: "_blank", rel: l.me ? "me noopener noreferrer" : "noopener noreferrer" }
+                    : {})}
+                >
+                  <span>{l.label}</span>
+                  <strong>{l.value}</strong>
+                  <em aria-hidden="true">-&gt;</em>
+                </a>
+              ))}
+            </nav>
+          </Panel>
+
           <Panel title="FILM TRANSPORT">
             <div className="counter" aria-live="polite">
               <span className="counter-num">{String(snap.frame).padStart(2, "0")}</span>
@@ -123,19 +175,6 @@ export default function Home() {
               </button>
             </div>
             <p className="fine">ROLL Nº{snap.roll} · ZIMCHROME 400</p>
-          </Panel>
-
-          <Panel title="KEYMAP">
-            <pre className="keymap">{[
-              "SPACE  fire shutter",
-              "W      wind lever",
-              "R      rewind roll",
-              "S / D  shutter speed",
-              "Z / X  aperture",
-              ", / .  focus",
-              "DRAG   orbit  WHEEL dolly",
-              "M      mute foley",
-            ].join("\n")}</pre>
           </Panel>
         </div>
 
@@ -204,6 +243,15 @@ export default function Home() {
               </button>
             </div>
           </Panel>
+
+          <Panel title="KEYMAP">
+            <pre className="keymap">{[
+              "SPACE fire    W wind",
+              "R rewind      M mute",
+              "S/D speed     Z/X stop",
+              ",/. focus    DRAG orbit",
+            ].join("\n")}</pre>
+          </Panel>
         </div>
       </div>
 
@@ -227,6 +275,9 @@ export default function Home() {
             ))
           )}
         </div>
+        <p className="colophon">
+          ZIM.DEV · © 2026 MILES ZIMMERMAN · RENDERED LIVE IN ASCII, NO PIXELS HARMED · SN 0001976
+        </p>
       </footer>
     </main>
   );

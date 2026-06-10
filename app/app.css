@@ -30,6 +30,20 @@ body {
   overflow: hidden;
 }
 
+/* the HUD is sized in rem; the ASCII grid is JS-sized — scale the chrome
+   down on shorter screens so every control stays on deck */
+@media (max-height: 1020px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-height: 860px) {
+  html {
+    font-size: 12.5px;
+  }
+}
+
 /* faint photographic grain over everything */
 body::after {
   content: "";
@@ -59,6 +73,19 @@ body::after {
   gap: 1rem;
   padding: 0.55rem 1.1rem 0.45rem;
   border-bottom: 1px solid var(--line);
+}
+
+.ident {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.ident-sub {
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--amber-dim);
+  white-space: nowrap;
 }
 
 .brand {
@@ -129,6 +156,77 @@ body::after {
   color: var(--amber-faint);
 }
 
+/* ---- operator's card ------------------------------------------ */
+
+.op-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--amber-bright);
+  text-shadow: var(--glow);
+  margin-bottom: 0.35rem;
+}
+
+.op-trade {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  line-height: 1.6;
+  color: var(--amber);
+}
+
+.op-station {
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  color: var(--amber-dim);
+  margin-bottom: 0.65rem;
+}
+
+.op-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.op-links a {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr auto;
+  gap: 0.4rem;
+  align-items: baseline;
+  padding: 0.34rem 0.1rem;
+  border-top: 1px dotted var(--line);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--amber);
+  text-decoration: none;
+  transition: all 90ms linear;
+}
+
+.op-links a span {
+  font-size: 0.54rem;
+  letter-spacing: 0.22em;
+  color: var(--amber-faint);
+}
+
+.op-links a strong {
+  font-weight: 400;
+}
+
+.op-links a em {
+  font-style: normal;
+  color: var(--amber-faint);
+  transition: transform 90ms linear, color 90ms linear;
+}
+
+.op-links a:hover {
+  color: var(--amber-bright);
+  text-shadow: var(--glow);
+  background: rgba(255, 184, 77, 0.06);
+}
+
+.op-links a:hover em {
+  color: var(--red);
+  transform: translateX(3px);
+}
+
 /* ---- film transport panel ------------------------------------ */
 
 .counter {
@@ -144,7 +242,7 @@ body::after {
 
 .counter-num {
   font-family: var(--font-display);
-  font-size: 3.1rem;
+  font-size: 2.5rem;
   line-height: 1;
   color: var(--red);
   text-shadow: 0 0 9px rgba(255, 84, 54, 0.55);
@@ -200,12 +298,12 @@ body::after {
 
 .btn {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   letter-spacing: 0.14em;
   color: var(--amber);
   background: transparent;
   border: 1px solid var(--line-bright);
-  padding: 0.42rem 0.5rem;
+  padding: 0.34rem 0.5rem;
   cursor: pointer;
   text-align: center;
   transition: all 90ms linear;
@@ -459,7 +557,7 @@ pre.grid {
   display: flex;
   gap: 0.7rem;
   overflow-x: auto;
-  min-height: 7.2rem;
+  min-height: 6.4rem;
   align-items: center;
   scrollbar-width: thin;
   scrollbar-color: var(--line) transparent;
@@ -506,6 +604,16 @@ pre.thumb {
   border-top: 1px dotted var(--line);
   margin-top: 0.15rem;
   padding-top: 0.18rem;
+}
+
+.colophon {
+  margin-top: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 0.55rem;
+  letter-spacing: 0.26em;
+  color: var(--amber-faint);
 }
 
 /* ---- responsive ------------------------------------------------- */

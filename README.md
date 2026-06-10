@@ -1,6 +1,8 @@
-# ZIM-35 — Mechanical ASCII Camera
+# zim.dev — Miles Zimmerman
 
-A fully mechanical 35mm SLR you can operate, rendered live as ASCII characters.
+Personal site of Miles Zimmerman (software engineer & photographer, San
+Francisco). The centerpiece is the **ZIM-35**: a fully mechanical 35mm SLR you
+can operate, rendered live as ASCII characters.
 The camera is real 3D geometry (boxes, cylinders, knurled rings) pushed through a
 custom software rasterizer — z-buffer, Gouraud shading, per-material character
 ramps — into a `<pre>` tag at ~60fps. No WebGL, no canvas, no dependencies.
@@ -49,6 +51,11 @@ The engine lives in `app/lib/zim35/`:
 - `renderer.ts` — the ASCII rasterizer (depth + luminance + part-ID buffers)
 - `audio.ts` — WebAudio-synthesized mechanical foley
 - `engine.ts` — film-transport state machine, input, tweens, render loop
+
+## Resume
+
+The OPERATOR panel links to `/resume.pdf` — drop your PDF at
+`public/resume.pdf` and it will be served statically.
 
 ## Deployment
 

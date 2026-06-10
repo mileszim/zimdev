@@ -108,7 +108,7 @@ export class Engine {
   // orbit
   private yaw = -0.55;
   private pitch = 0.3;
-  private dist = 9.2;
+  private dist = 10.2;
   private vyaw = 0;
   private vpitch = 0;
   private dragging = false;
