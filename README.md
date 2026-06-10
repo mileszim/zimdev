@@ -1,79 +1,59 @@
-# Welcome to React Router!
+# ZIM-35 — Mechanical ASCII Camera
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A fully mechanical 35mm SLR you can operate, rendered live as ASCII characters.
+The camera is real 3D geometry (boxes, cylinders, knurled rings) pushed through a
+custom software rasterizer — z-buffer, Gouraud shading, per-material character
+ramps — into a `<pre>` tag at ~60fps. No WebGL, no canvas, no dependencies.
 
-## Features
+Built with React Router 7 on Cloudflare Workers.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Operating the camera
 
-## Getting Started
+| Control | Action |
+| --- | --- |
+| Drag / arrow keys | Orbit the camera |
+| Scroll wheel | Dolly in/out |
+| `SPACE` or click the shutter release | Fire the shutter |
+| `W` or click the advance lever | Wind the film + cock the shutter |
+| `R` or click the rewind crank | Rewind the roll |
+| `S` / `D` or click the shutter dial | Shutter speed (1s – 1/1000) |
+| `Z` / `X` or click the aperture ring | Aperture (f/1.8 – f/16) |
+| `,` / `.` or click the focus ring | Focus |
+| `M` | Mute the synthesized foley |
 
-### Installation
+Every part of the camera is click-targetable in the ASCII render itself (an ID
+buffer is rasterized alongside the depth buffer). Fired frames are downsampled
+into little negatives on the contact sheet; the light meter scores your
+exposure against ZIMCHROME 400 in good light (1/125 @ f/8 is dead-on).
 
-Install the dependencies:
+## Development
 
-```bash
+```sh
 npm install
+npm run dev        # http://localhost:5173
+npm run typecheck
 ```
 
-### Development
+Render a frame to your terminal without a browser (handy for tuning the model):
 
-Start the development server with HMR:
-
-```bash
-npm run dev
+```sh
+npx tsx scripts/preview-frame.ts <yaw> <pitch> <dist>
+npx tsx scripts/preview-ids.ts            # part-ID buffer as letters
 ```
 
-Your application will be available at `http://localhost:5173`.
+The engine lives in `app/lib/zim35/`:
 
-## Previewing the Production Build
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
+- `math.ts` — affine transforms
+- `mesh.ts` — primitive builders (box, frustum, cylinder w/ knurling)
+- `slr.ts` — the camera model: named, animatable, clickable parts
+- `renderer.ts` — the ASCII rasterizer (depth + luminance + part-ID buffers)
+- `audio.ts` — WebAudio-synthesized mechanical foley
+- `engine.ts` — film-transport state machine, input, tweens, render loop
 
 ## Deployment
-
-Deployment is done using the Wrangler CLI.
-
-To build and deploy directly to production:
 
 ```sh
 npm run deploy
 ```
 
-To deploy a preview URL:
-
-```sh
-npx wrangler versions upload
-```
-
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
-npx wrangler versions deploy
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+Builds and deploys to Cloudflare Workers via Wrangler.
